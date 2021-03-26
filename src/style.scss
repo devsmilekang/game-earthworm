@@ -1,0 +1,28 @@
+$fontColor: #2196f3;
+$fontSize: 52;
+$WarmCellSize: 10;
+
+body{
+  div,span,p{
+    margin:0px;
+    padding:0px;
+  }
+}
+.title {
+  color: $fontColor;
+  font-size: $fontSize;
+  text-align: center;
+}
+
+.WarmCell{
+  position:absolute;
+  border:1px solid red;
+  width:$WarmCellSize+px;
+  height:$WarmCellSize+px;
+}
+.board-100{
+  position:relative;
+  width:$WarmCellSize*50+px;
+  height:$WarmCellSize*50+px;
+  border:1px solid black;
+}
