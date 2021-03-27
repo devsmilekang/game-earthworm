@@ -85,6 +85,18 @@ const GameBoard: React.FC<GameBoardProps> = ({ gameBoardSize }) => {
         if(isOutOfLine(top,left)){    // 밖으로 나간 경우
             return true;
         }
+        if(isCrashed(top,left)){
+            return true;
+        }
+        return false;
+    }
+    function isCrashed(top:number, left:number) :Boolean{
+        for(let i=0; i<cellsRef.current.length; i++){
+            if(cellsRef.current[i].top === top
+                && cellsRef.current[i].left === left){
+                    return true;
+            }
+        }
         return false;
     }
 
@@ -113,9 +125,11 @@ const GameBoard: React.FC<GameBoardProps> = ({ gameBoardSize }) => {
     useEffect(() => {
         document.body.addEventListener("keydown", setDirection);
     }, []);
+
     useEffect(()=>{
         gameStartStop(gameStatus);
     }, [gameStatus]);
+
     return (
         <>
             <div className={`board-${gameBoardSize}`}>
