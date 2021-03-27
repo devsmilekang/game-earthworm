@@ -7,7 +7,9 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --config ./webpack.prod",
-    "start": "webpack serve --config ./webpack.dev --hot --open"
+    "start": "webpack serve --config ./webpack.dev --hot --open",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
@@ -27,6 +29,7 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.23.1",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "gh-pages": "^3.1.0",
     "html-loader": "^2.1.2",
     "html-webpack-plugin": "^5.3.1",
     "mini-css-extract-plugin": "^1.3.9",
@@ -49,5 +52,6 @@
     "react-router-dom": "^5.2.0",
     "typescript": "^4.2.3",
     "webpack-merge": "^5.7.3"
-  }
+  },
+  "homepage": "http://kangminser.github.io/game-earthworm"
 }
