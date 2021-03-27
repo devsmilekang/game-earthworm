@@ -10,7 +10,7 @@ const App: React.FC<{}> = () => {
   return <Router>
     <Switch>
       <Route path="/">
-        <GameBoard size={100} />
+        <GameBoard gameBoardSize={50} />
       </Route>
     </Switch>
   </Router>

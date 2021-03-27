@@ -20,9 +20,19 @@ body{
   width:$WarmCellSize+px;
   height:$WarmCellSize+px;
 }
-.board-100{
+.board-50{
   position:relative;
   width:$WarmCellSize*50+px;
   height:$WarmCellSize*50+px;
   border:1px solid black;
+}
+.modal{
+  position: absolute;
+  min-width:100%;
+  min-height:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #AAAAAA;
+  opacity: 0.7;
 }
