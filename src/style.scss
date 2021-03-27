@@ -20,6 +20,9 @@ body{
   width:$WarmCellSize+px;
   height:$WarmCellSize+px;
 }
+.WarmCell.feed{
+  border:1px solid blue;
+}
 .board-50{
   position:relative;
   width:$WarmCellSize*50+px;

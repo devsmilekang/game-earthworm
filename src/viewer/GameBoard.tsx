@@ -22,15 +22,40 @@ const GameBoard: React.FC<GameBoardProps> = ({ gameBoardSize }) => {
     const CELLSIZE = 10;
     const [gameStatus, setGameStatus] = useState<boolean>(false);
     const [direction, _setDirection] = useState<Direction>(Direction.RIGHT);
-    const [cells, _setCells] = useState<Cell[]>([startWarmPosition()]);
+    const [cells, _setCells] = useState<Cell[]>([initWarmPostion()]);
+    const [feedCell, _setFeedCell] = useState<Cell | null>();
     const cellsRef = useRef(cells);
     const intervalEventRef = useRef<any>();
-    const directionRef = useRef(direction);
-    const [index, setIndex] = useState<number>(0);
+    const warmSizeRef = useRef<number>(1);
+    const directionRef = useRef<Direction>(direction);
+    const feedCellRef = useRef(feedCell);
+
     function setCells(data: Cell[]) {
         cellsRef.current = [...data];
         _setCells(data);
     }
+    function setFeedCell(data:Cell){
+        feedCellRef.current = data;
+        _setFeedCell(data);
+    }
+
+    function randomFeedCell() :Cell{
+        let top = Math.floor(Math.random() * Math.floor(gameBoardSize))*CELLSIZE;
+        let left = Math.floor(Math.random() * Math.floor(gameBoardSize))*CELLSIZE;
+        const cellMap = new Map();
+        cellsRef?.current.map(v =>{
+            cellMap.set(`${v.top},${v.left}`, true);
+        });
+        while(true){
+            if(!cellMap.has(`${top},${left}`)){
+                break;
+            }
+            top = Math.floor(Math.random() * Math.floor(gameBoardSize))*CELLSIZE;
+            left = Math.floor(Math.random() * Math.floor(gameBoardSize))*CELLSIZE;
+        }
+        return ({id:-1, top, left});
+    }
+
     function setDirection(e:any){
         if (e.keyCode === 38) {   // up
             directionRef.current = Direction.UP;
@@ -65,19 +90,33 @@ const GameBoard: React.FC<GameBoardProps> = ({ gameBoardSize }) => {
         else if (directionRef.current === Direction.RIGHT) {  //right
             left += 1;
         }
-        if(isEnd(copy[copy.length - 1].top + top * CELLSIZE, copy[copy.length - 1].left + left * CELLSIZE)){
+        const topPosition = copy[copy.length - 1].top + top * CELLSIZE;
+        const leftPosition = copy[copy.length - 1].left + left * CELLSIZE;
+        if(isEnd(topPosition, leftPosition)){
             setGameStatus(false);
             return;
+        }
+        if(isEatFeed(topPosition, leftPosition)){
+            setFeedCell(randomFeedCell());
+            warmSizeRef.current++; 
         }
         copy?.push({
             id: ++cellsId,
             top: copy[copy.length - 1].top + top * CELLSIZE,
             left: copy[copy.length - 1].left + left * CELLSIZE
         });
-        setCells(copy);
+        setCells(copy.slice(-1*warmSizeRef.current));
+    }
+    
+    function isEatFeed(top:number, left:number): Boolean{
+        if(feedCellRef?.current?.top === top 
+            && feedCellRef?.current?.left === left){
+                return true;
+            }
+        return false;
     }
 
-    function startWarmPosition() : Cell{
+    function initWarmPostion() : Cell{
         return ({id:0, top:Number(gameBoardSize/2)*CELLSIZE, left:Number(gameBoardSize/2)*CELLSIZE})
     }
 
@@ -114,8 +153,10 @@ const GameBoard: React.FC<GameBoardProps> = ({ gameBoardSize }) => {
     
     function gameStartStop(gameStatus:boolean){
         if(gameStatus){ //start
-            setCells([startWarmPosition()]);
-            intervalEventRef.current = setInterval(move, 100);
+            setCells([initWarmPostion()]);
+            setFeedCell(randomFeedCell());
+            warmSizeRef.current = 1;
+            intervalEventRef.current = setInterval(move, 50);
         }
         else{
             clearInterval(intervalEventRef.current);
@@ -134,6 +175,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ gameBoardSize }) => {
         <>
             <div className={`board-${gameBoardSize}`}>
                 {cells?.map(warm => <WarmCell key={warm.id} {...warm} />)}
+                {feedCell && <WarmCell {...feedCell} type="feed" />}
                 {!gameStatus && <div className={'modal'}>
                     <p>gameOver</p>
                 </div>}
