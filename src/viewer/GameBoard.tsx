@@ -1,7 +1,7 @@
 import { closeSync } from 'node:fs';
 import React, { useEffect, useRef, useState } from 'react';
 import WarmCell from '../components/WarmCell';
-import '../style.scss';
+import '../style.module.scss';
 
 interface GameBoardProps {
   gameBoardSize: number;
@@ -184,13 +184,13 @@ const GameBoard: React.FC<GameBoardProps> = ({ gameBoardSize }) => {
 
   return (
     <>
-      <div className={`board-${gameBoardSize}`}>
+      <div data-testid="board" className={`board-${gameBoardSize}`}>
         {cells?.map((warm) => (
           <WarmCell key={warm.id} {...warm} />
         ))}
         {feedCell && <WarmCell {...feedCell} type="feed" />}
         {!gameStatus && (
-          <div className={'modal'}>
+          <div data-testid="game-over-modal" className={'modal'}>
             <p>gameOver</p>
           </div>
         )}
