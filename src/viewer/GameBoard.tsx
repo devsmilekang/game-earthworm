@@ -1,7 +1,7 @@
 import { closeSync } from 'node:fs';
 import React, { useEffect, useRef, useState } from 'react';
 import WarmCell from '../components/WarmCell';
-import '../style.module.scss';
+import '../style.scss';
 
 interface GameBoardProps {
   gameBoardSize: number;
@@ -57,19 +57,28 @@ const GameBoard: React.FC<GameBoardProps> = ({ gameBoardSize }) => {
   }
 
   function setDirection(e: any) {
-    if (e.keyCode === 38) {
+    if (e.keyCode === Direction.UP && directionRef.current !== Direction.DOWN) {
       // up
       directionRef.current = Direction.UP;
       _setDirection(Direction.UP);
-    } else if (e.keyCode === 40) {
+    } else if (
+      e.keyCode === Direction.DOWN &&
+      directionRef.current !== Direction.UP
+    ) {
       //down
       directionRef.current = Direction.DOWN;
       _setDirection(Direction.DOWN);
-    } else if (e.keyCode === 37) {
+    } else if (
+      e.keyCode === Direction.LEFT &&
+      directionRef.current !== Direction.RIGHT
+    ) {
       //left
       directionRef.current = Direction.LEFT;
       _setDirection(Direction.LEFT);
-    } else if (e.keyCode === 39) {
+    } else if (
+      e.keyCode === Direction.RIGHT &&
+      directionRef.current !== Direction.LEFT
+    ) {
       //right
       directionRef.current = Direction.RIGHT;
       _setDirection(Direction.RIGHT);
