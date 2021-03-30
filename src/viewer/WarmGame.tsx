@@ -18,10 +18,11 @@ function WarmGame() {
       });
   }, []);
   return (
-    <div>
-      <GameBoard gameBoardSize={gameBoardSize} />
+    <div data-testid="warm-game">
+      <GameBoard />
       <form>
         <fieldset id="game-board-size-control">
+          <span>게임 크기 선택</span>
           {[20, 30, 40, 50].map((value) => {
             return (
               <CustomRadio
