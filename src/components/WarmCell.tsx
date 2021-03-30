@@ -11,7 +11,7 @@ interface WarmCellProps {
 const WarmCell: React.FC<WarmCellProps> = ({ top, left, type }) => {
   return (
     <div
-      className={`WarmCell ${type}`}
+      className={`WarmCell ${type ? type : ''}`}
       style={{ top: `${top + 'px'}`, left: `${left + 'px'}` }}
     ></div>
   );

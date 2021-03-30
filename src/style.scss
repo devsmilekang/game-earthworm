@@ -2,10 +2,12 @@ $fontColor: #2196f3;
 $fontSize: 52;
 $WarmCellSize: 10;
 
-body{
-  div,span,p{
-    margin:0px;
-    padding:0px;
+body {
+  div,
+  span,
+  p {
+    margin: 0px;
+    padding: 0px;
   }
 }
 .title {
@@ -14,28 +16,30 @@ body{
   text-align: center;
 }
 
-.WarmCell{
-  position:absolute;
-  border:1px solid red;
-  width:$WarmCellSize+px;
-  height:$WarmCellSize+px;
-}
-.WarmCell.feed{
-  border:1px solid blue;
-}
-.board-50{
-  position:relative;
-  width:$WarmCellSize*50+px;
-  height:$WarmCellSize*50+px;
-  border:1px solid black;
-}
-.modal{
+.WarmCell {
   position: absolute;
-  min-width:100%;
-  min-height:100%;
+  border: 1px solid red;
+  width: $WarmCellSize + px;
+  height: $WarmCellSize + px;
+}
+.WarmCell.feed {
+  border: 1px solid blue;
+}
+@for $i from 10 through 50 {
+  .board-#{$i} {
+    position: relative;
+    width: $WarmCellSize * $i + px;
+    height: $WarmCellSize * $i + px;
+    border: 1px solid black;
+  }
+}
+.modal {
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #AAAAAA;
+  background-color: #aaaaaa;
   opacity: 0.7;
 }

@@ -1,4 +1,3 @@
-import { closeSync } from 'node:fs';
 import React, { useEffect, useRef, useState } from 'react';
 import WarmCell from '../components/WarmCell';
 import '../style.scss';
@@ -195,16 +194,26 @@ const GameBoard: React.FC<GameBoardProps> = ({ gameBoardSize }) => {
     <>
       <div data-testid="board" className={`board-${gameBoardSize}`}>
         {cells?.map((warm) => (
-          <WarmCell key={warm.id} {...warm} />
+          <WarmCell
+            data-testid="warm-cell"
+            key={warm.id}
+            {...warm}
+            type="warm"
+          />
         ))}
-        {feedCell && <WarmCell {...feedCell} type="feed" />}
+        {feedCell && (
+          <WarmCell data-testid="feed-cell" {...feedCell} type="feed" />
+        )}
         {!gameStatus && (
           <div data-testid="game-over-modal" className={'modal'}>
             <p>gameOver</p>
           </div>
         )}
       </div>
-      <button onClick={() => setGameStatus(!gameStatus)}>
+      <button
+        data-testid="game-progress-button"
+        onClick={() => setGameStatus(!gameStatus)}
+      >
         {gameStatus ? 'stop' : 'start'}
       </button>
     </>
