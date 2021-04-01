@@ -4,9 +4,15 @@ interface Props {
   value: string | number;
   name: string;
   defaultValue: number | null;
+  clickEvent: (e: React.MouseEvent<HTMLInputElement>) => void;
 }
 
-export default function CustomRadio({ value, name, defaultValue }: Props) {
+export default function CustomRadio({
+  value,
+  name,
+  defaultValue,
+  clickEvent,
+}: Props) {
   return (
     <label>
       <input
@@ -15,6 +21,7 @@ export default function CustomRadio({ value, name, defaultValue }: Props) {
         value={value}
         data-radio-name={name}
         defaultChecked={defaultValue === value}
+        onClick={(e) => clickEvent(e)}
       />
       {value}
     </label>

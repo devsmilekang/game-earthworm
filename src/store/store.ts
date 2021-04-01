@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import WarmGameReducer from '../slice/WarmGameSlice';
+import GameBarodReducer from '../slice/GameBoardSlice';
 
 export const store = configureStore({
   reducer: {
     WarmGame: WarmGameReducer,
+    GameBoard: GameBarodReducer,
   },
 });
 
